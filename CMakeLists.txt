@@ -7,5 +7,8 @@ INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIR})
 SET (CMAKE_CXX_STANDARD 11)
 
 # temporário
-ADD_EXECUTABLE(gameserver src/main.cpp)
+ADD_EXECUTABLE(gameserver src/server.cpp)
 TARGET_LINK_LIBRARIES(gameserver ${Boost_SYSTEM_LIBRARY})
+
+ADD_EXECUTABLE(gameclient src/client.cpp)
+TARGET_LINK_LIBRARIES(gameclient ${Boost_SYSTEM_LIBRARY})
