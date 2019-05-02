@@ -3,7 +3,7 @@
 #include "definitions.h"
 
 int main() {
-	unsigned short port = 8080;
+	unsigned short port = 3333;
 	std::string address = "127.0.0.1";
 	
 	net::error_code error;

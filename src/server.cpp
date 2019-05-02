@@ -3,7 +3,7 @@
 #include "definitions.h"
 
 int main() {
-	unsigned short port = 8080;
+	unsigned short port = 3333;
 	std::string address = "127.0.0.1";
 
 	auto ip = net::ip_address_v4::any();
@@ -19,6 +19,13 @@ int main() {
 
 	if(error.value() != 0){
 		std::cout << "Erro ao criar socket! Código de erro:" << error.value() << ". Erro" 			<< error.message() << std::endl;
+		return error.value();
+	}
+
+	acceptor.bind(ep, error);
+
+	if(error.value() != 0){
+		std::cout << "Bind não realizado! Código de erro:" << error.value() << ". Erro" 		<< error.message() << std::endl;
 		return error.value();
 	}
 
