@@ -1,39 +1,28 @@
 #include <iostream>
+#include <string>
 
 #include "definitions.h"
+#include "Server.h"
+
+void writeSync(net::socket& sock, std::string message);
+void writeAsync(net::socket& sock, std::string message);
+void writeCallback(const net::error_code& ec, size_t bytes_transferred);
 
 int main() {
 	unsigned short port = 3333;
-	std::string address = "127.0.0.1";
-
 	auto ip = net::ip_address_v4::any();
 
 	net::endpoint ep(ip, port);
-
 	net::io_service ios;
 
-	net::acceptor acceptor(ios);
-	net::error_code error;
+	net::Server server(ios, ep);
 
-	acceptor.open(ep.protocol(), error);
-
-	if(error.value() != 0){
-		std::cout << "Erro ao criar socket! Código de erro:" << error.value() << ". Erro" 			<< error.message() << std::endl;
-		return error.value();
+	server.onConnect([](net::Connection& conn)){
+		std::cout << "Nova conexão" << std::endl;
 	}
 
-	acceptor.bind(ep, error);
-
-	if(error.value() != 0){
-		std::cout << "Bind não realizado! Código de erro:" << error.value() << ". Erro" 		<< error.message() << std::endl;
-		return error.value();
-	}
-
-	acceptor.listen(30);
-
-	net::socket sock(ios);
-
-	acceptor.accept(sock);
+	server.start();
+	ios.run();
 
 	return 0;
 }

@@ -5,10 +5,18 @@ FIND_PACKAGE(Boost REQUIRED COMPONENTS system)
 INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIR})
 
 SET (CMAKE_CXX_STANDARD 11)
+SET(SOURCES
+	src/Connection.cpp
+	src/Server.cpp
+)
+
 
 # temporário
-ADD_EXECUTABLE(gameserver src/server.cpp)
+ADD_EXECUTABLE(gameserver ${SOURCERS} src/server.cpp)
 TARGET_LINK_LIBRARIES(gameserver ${Boost_SYSTEM_LIBRARY})
 
-ADD_EXECUTABLE(gameclient src/client.cpp)
+ADD_EXECUTABLE(gameclient ${SOURCERS} src/client.cpp)
 TARGET_LINK_LIBRARIES(gameclient ${Boost_SYSTEM_LIBRARY})
+
+ADD_EXECUTABLE(main ${SOURCERS} src/main.cpp)
+TARGET_LINK_LIBRARIES(main ${Boost_SYSTEM_LIBRARY})

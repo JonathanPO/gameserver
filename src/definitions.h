@@ -1,5 +1,7 @@
 #ifndef DEFINITIONS_H
 #define DEFINITIONS_H
+
+#include <memory>
 #include <boost/asio.hpp>
 
 namespace net {
@@ -9,7 +11,11 @@ namespace net {
 	using endpoint      = boost::asio::ip::tcp::endpoint;
 	using io_service    = boost::asio::io_service;
 	using socket        = boost::asio::ip::tcp::socket;
-	using acceptor      = boost::asio::ip::tcp::acceptor;	
+	using socket_ptr    = std::shared_ptr<boost::asio::ip::tcp::socket>;
+	using acceptor      = boost::asio::ip::tcp::acceptor;
+	using streambuf     = boost::asio::streambuf;	
+	using streambuf_ptr = std::shared_ptr<boost::asio::streambuf>;
+
 };
 
 #endif
