@@ -7,7 +7,9 @@ INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIR})
 SET (CMAKE_CXX_STANDARD 11)
 SET(SOURCES
 	src/Connection.cpp
+	src/CommunicationChannel.cpp
 	src/Server.cpp
+	src/Client.cpp
 )
 
 

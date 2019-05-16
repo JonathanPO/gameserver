@@ -16,9 +16,17 @@ void net::Server::OnConnect(net::Server::OnConnectHandler handler){
 	onConnectHandler_ = handler;
 }
 
+void net::Server::onMessage(OnMessageHandler handler){
+	handler_ = handler;
+}
+
 void net::Server::handleAccept(const net::error_code& ec, std::shared_ptr<net::Connection> conn){
 	if(!ec){
 		connections_.push_back(conn);
+		if(onMessageHandler_){
+			conn->onMessage(onMessageHandler_);
+		}
+		conn->start();
 		if(onConnectHandler_){
 			onConnectHandler_(*conn);
 		}

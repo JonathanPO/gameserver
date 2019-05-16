@@ -1,8 +1,8 @@
-#include <iostream>
-#include <string>
+#include <memory>
 
 #include "definitions.h"
 #include "Server.h"
+#include "Connection.h"
 
 void writeSync(net::socket& sock, std::string message);
 void writeAsync(net::socket& sock, std::string message);
@@ -14,12 +14,20 @@ int main() {
 
 	net::endpoint ep(ip, port);
 	net::io_service ios;
+	net::io_service::work work(ios);
 
 	net::Server server(ios, ep);
 
-	server.onConnect([](net::Connection& conn)){
-		std::cout << "Nova conexão" << std::endl;
-	}
+	server->onMessage([](net::CommunicationChannel& channel, std::string request){
+		if(request == "pontos"){
+			channel.write("20");
+		} else if(request == "numeroSecreto"){
+			channel.write("42");
+		} else{
+			channel.write("Requisição Inválida");
+		}
+
+	});
 
 	server.start();
 	ios.run();

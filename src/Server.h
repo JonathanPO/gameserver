@@ -11,16 +11,18 @@ namespace net{
 	class Server{
 		public:
 			using OnConnectHandler = std::function<void(net::Connection&)>;
-
+			using OnMessageHandler = std::function<void(net::CommunicationChannel&, std::string)>;
 			Server(net::io_service& io_service, net::endpoint ep);
 			void start();
 			void OnConnect(OnConnectHandler handler);
+			void onMessage(OnMessageHandler handler);
 
 		private:
 			net::io_service& io_service_;
 			net::acceptor acceptor_;
 			std::vector<std::shared_ptr<net::Connection>> connections_;
 			OnConnectHandler onConnectHandler_;
+			OnMessageHandler OnMessageHandler_;
 
 			void handleAccept(const net::error_code& ec, std::shared_ptr<net::Connection> conn);
 			void startAccepting();
